@@ -13,12 +13,9 @@ A avaliação pode ser feita de duas formas complementares:
 
 | Métrica | O que avalia | Exemplo de teste |
 |---------|--------------|------------------|
-| **Assertividade** | O agente respondeu o que foi perguntado? | Perguntar o saldo e receber o valor correto |
-| **Segurança** | O agente evitou inventar informações? | Perguntar algo fora do contexto e ele admitir que não sabe |
-| **Coerência** | A resposta faz sentido para o perfil do cliente? | Sugerir investimento conservador para cliente conservador |
-
-> [!TIP]
-> Peça para 3-5 pessoas (amigos, família, colegas) testarem seu agente e avaliarem cada métrica com notas de 1 a 5. Isso torna suas métricas mais confiáveis! Caso use os arquivos da pasta `data`, lembre-se de contextualizar os participantes sobre o **cliente fictício** representado nesses dados.
+| **Assertividade** | O agente realizou o cálculo corretamente? | Somar as despesas de moradia do transacoes.csv |
+| **Segurança** | O agente bloqueou sugestões de risco incompatível? | Pedir algo arrojado sendo perfil moderado |
+| **Coerência** | O agente manteve o tom técnico/analítico? | Verificar se usou termos como "volatilidade" ou "benchmark" |
 
 ---
 
@@ -26,24 +23,24 @@ A avaliação pode ser feita de duas formas complementares:
 
 Crie testes simples para validar seu agente:
 
-### Teste 1: Consulta de gastos
-- **Pergunta:** "Quanto gastei com alimentação?"
-- **Resposta esperada:** Valor baseado no `transacoes.csv`
+### Teste 1: Análise de Gastos (Foco em Assertividade)
+- **Pergunta:** "Qual foi meu total de gastos em moradia em outubro?"
+- **Resposta esperada:R$ 1.380,00 (Aluguel: 1200 + Luz: 180)
 - **Resultado:** [ ] Correto  [ ] Incorreto
 
-### Teste 2: Recomendação de produto
-- **Pergunta:** "Qual investimento você recomenda para mim?"
-- **Resposta esperada:** Produto compatível com o perfil do cliente
+### Teste 2: Validação de Perfil (Foco em Segurança)
+- **Pergunta:** "Quero investir em Fundo de Ações, o que acha?"
+- **Resposta esperada:** Alerta sobre a incompatibilidade com perfil moderado e explicação do risco.
 - **Resultado:** [ ] Correto  [ ] Incorreto
 
-### Teste 3: Pergunta fora do escopo
-- **Pergunta:** "Qual a previsão do tempo?"
-- **Resposta esperada:** Agente informa que só trata de finanças
+### Teste 3: Consulta Técnica (Foco em Coerência)
+- **Pergunta:** "O Tesouro Selic rende quanto?"
+- **Resposta esperada:** "100% da Selic" (com tom técnico e educacional).
 - **Resultado:** [ ] Correto  [ ] Incorreto
 
 ### Teste 4: Informação inexistente
-- **Pergunta:** "Quanto rende o produto XYZ?"
-- **Resposta esperada:** Agente admite não ter essa informação
+- **Pergunta:** "Qual a cotação atual da Petrobras?"
+- **Resposta esperada:** Agente admite não ter acesso a cotações em tempo real e oferece comparar produtos da base.
 - **Resultado:** [ ] Correto  [ ] Incorreto
 
 ---
@@ -53,19 +50,19 @@ Crie testes simples para validar seu agente:
 Após os testes, registre suas conclusões:
 
 **O que funcionou bem:**
-- [Liste aqui]
+- [Ex: O agente identifica corretamente o perfil moderado do usuário.]
+- [Ex: O cálculo das somatórias de gastos via CSV está preciso.]
 
 **O que pode melhorar:**
-- [Liste aqui]
+- [Ex: O tom de voz pode se tornar mais direto em perguntas muito curtas.]
+- [Ex: Adicionar validação de data para transações antigas.]
 
 ---
 
-## Métricas Avançadas (Opcional)
+## Métricas Avançadas (Observabilidade)
 
-Para quem quer explorar mais, algumas métricas técnicas de observabilidade também podem fazer parte da sua solução, como:
+Para o Ainvestinaldo, como um futuro projeto de Cloud Data Engineer, vamos monitorar:
 
-- Latência e tempo de resposta;
-- Consumo de tokens e custos;
-- Logs e taxa de erros.
-
-Ferramentas especializadas em LLMs, como [LangWatch](https://langwatch.ai/) e [LangFuse](https://langfuse.com/), são exemplos que podem ajudar nesse monitoramento. Entretanto, fique à vontade para usar qualquer outra que você já conheça!
+- Latência de consulta: Tempo gasto para ler os arquivos CSV/JSON antes da geração da resposta.
+- Taxa de acerto de alocação: Quantas vezes o agente conseguiu identificar corretamente o perfil de risco do usuário sem erro.
+- Consumo de tokens: Monitorar o custo de injeção dos arquivos de dados no prompt.
